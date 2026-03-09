@@ -12,8 +12,8 @@ import numpy as np
 from src.gsssp.generators.spectrumLabeledSequence import SpectrumLabeledSequence
 
 DESTINY = '/mnt/data3/sponte/datasets/conGSSSP.large.2' # "D:\\Datasets\\conGSSSP_v2"
-BATCHT_SIZE = 16
-BATCHT_CANT = 2
+BATCHT_SIZE = 32
+BATCHT_CANT = 314 # Total de 10,048 imagenes
 
 spectrum_gen = SpectrumLabeledSequence(
     height_range=(500,1500),

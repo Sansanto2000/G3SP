@@ -457,7 +457,7 @@ def add_plate_edge(img, edges, position:Position):
     match position:
         case Position.RIGHT:
             max_thickness = int((w - x_max) * (1 - margin))
-            thickness = random.randint(0, int(max_thickness))
+            thickness = random.randint(0, max(1, int(max_thickness)))
             pts = np.array([
                 [w-thickness, 0],
                 [w, 0],
@@ -467,7 +467,7 @@ def add_plate_edge(img, edges, position:Position):
             cv2.fillPoly(img, [pts], bg_color)
         case Position.LEFT:
             max_thickness = int(x_min * (1 - margin))
-            thickness = random.randint(0, int(max_thickness))
+            thickness = random.randint(0, max(1, int(max_thickness)))
             pts = np.array([
                 [0, 0],
                 [thickness, 0],
@@ -477,7 +477,7 @@ def add_plate_edge(img, edges, position:Position):
             cv2.fillPoly(img, [pts], bg_color)
         case Position.TOP:
             max_thickness = int(y_min * (1 - margin))
-            thickness = random.randint(0, int(max_thickness))
+            thickness = random.randint(0, max(1, int(max_thickness)))
             pts = np.array([
                 [0, 0],
                 [w, 0],
@@ -487,7 +487,7 @@ def add_plate_edge(img, edges, position:Position):
             cv2.fillPoly(img, [pts], bg_color)
         case Position.BOTTOM:
             max_thickness = int((h - y_max) * (1 - margin))
-            thickness = random.randint(0, int(max_thickness))
+            thickness = random.randint(0, max(1, int(max_thickness)))
             pts = np.array([
                 [0, h],
                 [w, h],
@@ -495,6 +495,4 @@ def add_plate_edge(img, edges, position:Position):
                 [0, h-thickness + shift]
             ])
             cv2.fillPoly(img, [pts], bg_color)
-           
-
     return img
