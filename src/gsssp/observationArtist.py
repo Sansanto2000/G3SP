@@ -127,14 +127,14 @@ def drawObservation(
     # Pintar espectro de ciencia
     onlyObservation = np.zeros((*img.shape[:2], 3), dtype=np.uint8)
     ys, xs = np.where(maskParts["science"] == 255)
-    vertical_noise_level = random.uniform(0,0.7)
+    vertical_noise_level = random.uniform(0,0.5)
     science_function = spectral_function(
         width=labelForGraph["width"], 
         noise_level=255*random.uniform(0.005, 0.1), 
         n_peaks=random.randint(4, 15),
         baseline=0,
         vertical_noise_level= vertical_noise_level,
-        peak_spread=2.6,
+        peak_spread=random.uniform(0.4, 2.6),
         n_absorption_lines=random.randint(0, 25),
         absorption_lines_spread=random.uniform(0.01, 0.5),
         )
@@ -147,7 +147,7 @@ def drawObservation(
     lamp_function = spectral_function(
         width=labelForGraph["width"], 
         noise_level=255*0.01, 
-        n_peaks=random.randint(20, 150),
+        n_peaks=random.randint(15, 150),
         baseline=255 * random.uniform(0.0, 0.1),
         vertical_noise_level=vertical_noise_level,
         peak_spread=random.uniform(0.001, 0.04),
