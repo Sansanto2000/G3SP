@@ -127,16 +127,16 @@ def drawObservation(
     # Pintar espectro de ciencia
     onlyObservation = np.zeros((*img.shape[:2], 3), dtype=np.uint8)
     ys, xs = np.where(maskParts["science"] == 255)
-    vertical_noise_level = random.uniform(0,0.5)
+    vertical_noise_level = random.uniform(0,0.05)
     science_function = spectral_function(
         width=labelForGraph["width"], 
-        noise_level=255*random.uniform(0.005, 0.1), 
-        n_peaks=random.randint(4, 15),
-        baseline=0,
+        noise_level=255*random.uniform(0, 0.01), 
+        n_peaks=random.randint(4, 10),
+        baseline=random.randint(max(0, baseGrey-60), baseGrey+15),
         vertical_noise_level= vertical_noise_level,
         peak_spread=random.uniform(0.4, 2.6),
-        n_absorption_lines=random.randint(0, 25),
-        absorption_lines_spread=random.uniform(0.01, 0.5),
+        n_absorption_lines=random.randint(0, 12),
+        absorption_lines_spread=random.uniform(0, 0.1),
         )
     for xi, yi in zip(xs, ys):
         intensity = science_function(xi-labelForGraph["x"])
@@ -148,7 +148,7 @@ def drawObservation(
         width=labelForGraph["width"], 
         noise_level=255*0.01, 
         n_peaks=random.randint(15, 150),
-        baseline=255 * random.uniform(0.0, 0.1),
+        baseline=random.randint(max(0, baseGrey-60), baseGrey+15),
         vertical_noise_level=vertical_noise_level,
         peak_spread=random.uniform(0.001, 0.04),
         n_absorption_lines=0,
@@ -181,7 +181,7 @@ def drawObservation(
 
 
 
-def spectral_function(width:int, noise_level:float, n_peaks:int, baseline:int, 
+def spectral_function(width:int, noise_level:float, n_peaks:int, baseline:int = 0, 
                       vertical_noise_level:float=0.2, peak_spread:float=1.0, 
                       n_absorption_lines:int=0, 
                       absorption_lines_spread:float = 1.0) -> Callable[[int], int]:

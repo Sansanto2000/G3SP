@@ -50,7 +50,7 @@ class SpectrumLabeledSequence(Sequence):
       self, *, 
       height_range = (1000, 4000), 
       width_range = (1000, 4000), 
-      gray_value_range = (0, 0.15), 
+      gray_value_range = (0, 0.6), 
       angle_range = (-3, 3), 
       opening_lamp_range = (0.1, 0.45), 
       distance_between_components_range = (0.001, 0.1),
@@ -201,8 +201,8 @@ class SpectrumLabeledSequence(Sequence):
       blur_kernel_size = random.choice(self.blur_kernel_size_options)
       # Cantidad de manchas alargadas tipo "violín"
       violin_line_count = np.random.choice(
-          [0, 1, 2],
-          p=[0.70, 0.25, 0.05]
+          [0, 1, 2, 3],
+          p=[0.9, 0.09, 0.009, 0.001]
         ) if self.violin_line_include else 0
       # Intensidad de las manchas alargadas tipo "violín"
       violin_intensity = random.uniform(0.1, 1.0)

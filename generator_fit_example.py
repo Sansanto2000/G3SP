@@ -41,7 +41,7 @@ observations_val_gen = SpectrumLabeledSequence(
 
 ### Modelo ###
 model = tf.keras.models.load_model(
-    '/home/sponte/Repositorios/SpectroscopicObservationDetector/models/model.keras',
+    MODEL_PATH,
     compile=False
 )
 # Optimizador 
