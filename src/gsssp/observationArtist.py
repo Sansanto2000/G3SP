@@ -148,7 +148,7 @@ def drawObservation(
         width=labelForGraph["width"], 
         noise_level=255*0.01, 
         n_peaks=random.randint(15, 150),
-        baseline=random.randint(max(0, baseGrey-60), baseGrey+15),
+        baseline=random.randint(max(0, baseGrey-60), baseGrey+5),
         vertical_noise_level=vertical_noise_level,
         peak_spread=random.uniform(0.001, 0.04),
         n_absorption_lines=0,
@@ -179,12 +179,17 @@ def drawObservation(
 
     return img, onlyObservation, maskObservation, labelObservation
 
+class Fading(Enum):
+    NO = 0
+    GAUSSIAN = 1
+    PLANCK = 2
 
 
 def spectral_function(width:int, noise_level:float, n_peaks:int, baseline:int = 0, 
                       vertical_noise_level:float=0.2, peak_spread:float=1.0, 
                       n_absorption_lines:int=0, 
-                      absorption_lines_spread:float = 1.0) -> Callable[[int], int]:
+                      absorption_lines_spread:float = 1.0,
+                      fading:Fading = Fading.PLANCK) -> Callable[[int], int]:
     """Genera una funcion que representa un espectro de ciencia sintetico.
 
     Parametros:
@@ -238,6 +243,21 @@ def spectral_function(width:int, noise_level:float, n_peaks:int, baseline:int = 
 
     # Pequeñas lineas blancas aleatorias
     spectrum += np.random.rand(width)*vertical_noise_level
+
+    ### Desvanecimiento
+    match fading:
+        case Fading.GAUSSIAN:
+            x_idx = np.arange(width)
+            center = width * 0.5
+            sigma = width * 0.3  # Ancho
+            gaussian_fade = np.exp(- (x_idx - center)**2 / (2 * sigma**2))
+            spectrum *= gaussian_fade
+        case Fading.PLANCK:
+            #x_idx = np.arange(width)
+            lambdas = np.linspace(0.2, 1, width)
+            curve = planck_like(lambdas, T=0.5)
+            planck_fade = (curve - np.min(curve)) / (np.max(curve) - np.min(curve)) # Normalizar
+            spectrum *= planck_fade
 
     # Normalizar a rango [0, 1]
     spectrum -= spectrum.min()
@@ -496,3 +516,16 @@ def add_plate_edge(img, edges, position:Position):
             ])
             cv2.fillPoly(img, [pts], bg_color)
     return img
+
+def planck_like(l, T=0.5):
+    """Funcion de planck simplificada basada en nanometros (eje x) y
+    Temperatura. 
+
+    Args:
+        l (_type_): Vector de nanometros.
+        T (float, optional): Temperatura. Defaults to 0.5.
+
+    Returns:
+        _type_: Vector de intensidades.
+    """
+    return 1 / (l**5 * (np.exp(1/(l*T)) - 1))
