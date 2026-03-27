@@ -254,7 +254,7 @@ def spectral_function(width:int, noise_level:float, n_peaks:int, baseline:int = 
             spectrum *= gaussian_fade
         case Fading.PLANCK:
             #x_idx = np.arange(width)
-            lambdas = np.linspace(0.2, 1, width)
+            lambdas = np.linspace(0.2, 0.8, width)
             curve = planck_like(lambdas, T=0.5)
             planck_fade = (curve - np.min(curve)) / (np.max(curve) - np.min(curve)) # Normalizar
             spectrum *= planck_fade

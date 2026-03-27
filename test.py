@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Dominio (longitudes de onda normalizadas)
-lambdas = np.linspace(0.25, 0.8, 500)  # tipo visible (400nm - 700nm)
+lambdas = np.linspace(0.2, 0.8, 500)  # tipo visible (400nm - 700nm)
 
 def planck_like(l, T=0.5):
     """Funcion de planck simplificada basada en nanometros (eje x) y

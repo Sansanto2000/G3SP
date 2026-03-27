@@ -11,9 +11,10 @@ from src.gsssp.observationArtist import labelListToYolov11Format
 import numpy as np
 from src.gsssp.generators.spectrumLabeledSequence import SpectrumLabeledSequence
 
-DESTINY = '/mnt/data3/sponte/datasets/conGSSSP.test' # "D:\\Datasets\\conGSSSP_v2"
+DESTINY = '/mnt/data3/sponte/datasets/conGSSSP.large.3' # "D:\\Datasets\\conGSSSP_v2"
 BATCHT_SIZE = 16
-BATCHT_CANT = 2 # Total de 10,048 imagenes
+BATCHT_CANT = 6000 # Total de 96000 imagenes
+BEGIN_NUM = 0 # Numero de inicio
 
 spectrum_gen = SpectrumLabeledSequence(
     height_range=(500,1500),
@@ -25,7 +26,7 @@ spectrum_gen = SpectrumLabeledSequence(
 
 ### Guardar elementos de la cantidad de lotes indicados ###
 batch_cant = BATCHT_CANT
-i = 0
+i = BEGIN_NUM
 for batch_nro in tqdm(range(batch_cant)):
     batch_x, batch_y = spectrum_gen[i]
 
