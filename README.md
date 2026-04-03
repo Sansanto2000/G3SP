@@ -1,4 +1,4 @@
-# GSSSP
+# G3SP
 
 G3SP (Generator of Synthetic Scans of Spectroscopic Plates) es un conjunto de herramientas para la generación de imágenes sintéticas de escaneos de placas espectroscópicas.
 
