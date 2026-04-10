@@ -10,6 +10,15 @@ De cada imagen generada se provee tanto la imagen como la información de los el
 
 ![Imagen sintética de un escaneo de una placa espectroscópica con 4 observaciones. En azul los limites que delimitan la posición de cada una de las observaciones generadas.](assets/exampleGeneration2.jpg)
 
+## Formato de etiquetas
+Las etiquetas producidas por el generador están en formato YOLO. En esquema *rel_xywh*, osea 5 datos, el primero entero, los demás floats normalizados como valores entre 0 y 1:
+
+```
+<class_id> <x_center> <y_center> <width> <height>
+```
+
+`<class_id>` representa la clase etiquetada respecto al total. Ya que aquí solo hay un tipo de objeto su valor siempre es 0. `<x_center>` e ` <y_center>` corresponden a las coordenadas normalizadas del centro de cada bounding box. `<width>` y `<height>` representan las dimensiones ancho y alto respectivamente.
+
 
 # Entorno virtual
 
